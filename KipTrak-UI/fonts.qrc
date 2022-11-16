@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>regularFonts.otf</file>
+        <file>solidFonts.otf</file>
+    </qresource>
+</RCC>

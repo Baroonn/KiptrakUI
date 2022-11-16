@@ -1,0 +1,12 @@
+#ifndef KIPTRAKLIB_GLOBAL_H
+#define KIPTRAKLIB_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(KIPTRAKLIB_LIBRARY)
+#  define KIPTRAKLIB_EXPORT Q_DECL_EXPORT
+#else
+#  define KIPTRAKLIB_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // KIPTRAKLIB_GLOBAL_H
