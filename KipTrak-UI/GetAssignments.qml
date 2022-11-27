@@ -5,6 +5,7 @@ import QtQml
 import "service.js" as Service
 import "Database.js" as LocalStorage
 import KipTrak 1.0
+
 Item {
     width: parent.width
     height: parent.height
@@ -13,6 +14,10 @@ Item {
         anchors.fill: parent
         color: "white"
 
+        FontLoader{
+            id: webFont
+            source: "qrc:/solidFonts.otf"
+        }
         Connections{
             target: masterController.ui_webRequest
             onRequestComplete: function(status_code, response){
@@ -346,23 +351,52 @@ Item {
 
                 }
 
-                CheckBox{
-                    id:checkBox
-                    checked: status.text === "Completed" ? true : false
-                    checkState: status.text === "Completed"? Qt.Checked:Qt.Unchecked
-                    checkable: true
-                    anchors.right: parent.right
-                    anchors.rightMargin:10
-                    onClicked: {
-                        console.log(checkBox.checked)
-                        if(checkBox.checked){
-                            LocalStorage.dbUpdateAssignmentStatus("Completed", assignId.text)
-                        }
-                        else{
-                            LocalStorage.dbUpdateAssignmentStatus("New", assignId.text)
-                        }
+//                CheckBox{
+//                    id:checkBox
+//                    checked: status.text === "Completed" ? true : false
+//                    checkState: status.text === "Completed"? Qt.Checked:Qt.Unchecked
+//                    checkable: true
+//                    anchors.right: parent.right
+//                    anchors.rightMargin:10
+//                    onClicked: {
+//                        console.log(checkBox.checked)
+//                        if(checkBox.checked){
+//                            LocalStorage.dbUpdateAssignmentStatus("Completed", assignId.text)
+//                        }
+//                        else{
+//                            LocalStorage.dbUpdateAssignmentStatus("New", assignId.text)
+//                        }
 
+//                    }
+//                }
+
+                Text{
+                    id: customCheckBox
+                    anchors.right: parent.right
+                    anchors.rightMargin: 15
+                    anchors.top: parent.top
+                    anchors.topMargin: 10
+                    font{
+                        family: webFont.name
+                        pixelSize: 25
                     }
+                    text: status.text === "Completed"? "\uf058" : "\uf111"
+                    color: "white"
+                    MouseArea{
+                        anchors.fill: parent
+                        onClicked:{
+                            console.log(assignId.text)
+                            if(customCheckBox.text === "\uf058"){
+                                LocalStorage.dbUpdateAssignmentStatus("New", assignId.text)
+                                customCheckBox.text = "\uf111"
+                            }
+                            else{
+                                LocalStorage.dbUpdateAssignmentStatus("Completed", assignId.text)
+                                customCheckBox.text = "\uf058"
+                            }
+                        }
+                    }
+
                 }
 
                 onClicked: {
