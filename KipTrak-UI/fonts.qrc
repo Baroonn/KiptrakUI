@@ -2,5 +2,7 @@
     <qresource prefix="/">
         <file>regularFonts.otf</file>
         <file>solidFonts.otf</file>
+        <file>Poppins.ttf</file>
+        <file>Lato.ttf</file>
     </qresource>
 </RCC>

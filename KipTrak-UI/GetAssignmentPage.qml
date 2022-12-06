@@ -12,7 +12,7 @@ Item {
         id: back
         anchors.fill: parent
         anchors.margins: 10
-        color: "#2C3E50"
+        color: "#1C4A5A"
 
         Label{
             id: assignId

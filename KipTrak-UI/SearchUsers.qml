@@ -9,7 +9,7 @@ Item {
     Rectangle{
         opacity: 1
         anchors.fill: parent
-        color: "#2C3E50"
+        color: "#1C4A5A"
 
         Rectangle {
             id: searchRectangle

@@ -76,7 +76,7 @@ Item {
         Rectangle{
             id: mainFrame
             anchors.fill: parent
-            color: "#2C3E50"
+            color: "#1C4A5A"
                 Text{
                     id: createAssignmentHeading
                     text: "Create \nAssignment"

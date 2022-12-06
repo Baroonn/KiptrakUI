@@ -20,7 +20,9 @@ int main(int argc, char *argv[])
     qDebug() << QSslSocket::supportsSsl();
     qDebug() << QSslSocket::sslLibraryVersionString();
     QGuiApplication app(argc, argv);
-    QFontDatabase::addApplicationFont("fontello.ttf");
+    QFontDatabase::addApplicationFont("Lato.ttf");
+    QFont fon("Lato");
+    app.setFont(fon);
 
     qmlRegisterType<MasterController>("KipTrak", 1, 0, "MasterController");
     qmlRegisterType<NavigationController>("KipTrak", 1, 0,"NavigationController");

@@ -12,7 +12,7 @@ Item {
             source: "qrc:/solidFonts.otf"
         }
         anchors.fill: parent
-        color: "#2C3E50"
+        color: "#1C4A5A"
         StackView{
             id: mainStack
             initialItem: "GetAssignments.qml"
@@ -29,11 +29,17 @@ Item {
             anchors.right: parent.right
             height: 50
             Rectangle{
+                anchors.fill: parent
+                color: "#1C4A5A"
+                z:-99
+            }
+
+            Rectangle{
                 id: home
                 height: navBar.height
                 width: navBar.width/3
                 anchors.left: navBar.left
-                color: "#2C3E50"
+                color: "#1C4A5A"
                 Text{
                     id: homeText
                     font{
@@ -41,7 +47,7 @@ Item {
                         pixelSize: 25
                     }
                     text: "\uf015"
-                    color: "white"
+                    color: "#ED7014"
                     anchors.centerIn: parent
                 }
 
@@ -49,12 +55,12 @@ Item {
                     anchors.fill: parent
                     onClicked: {
                         mainStack.replace("GetAssignments.qml")
-                        home.color = "#2C3E50"
-                        homeText.color = "white"
-                        search.color = "white"
-                        searchText.color = "#2C3E50"
-                        add.color = "white"
-                        addText.color  = "#2C3E50"
+
+                        homeText.color = "#ED7014"
+
+                        searchText.color = "white"
+
+                        addText.color  = "white"
                     }
                 }
 
@@ -65,6 +71,7 @@ Item {
                 anchors.left: home.right
                 height: parent.height
                 width: parent.width/3
+                color: "#1C4A5A"
                 Text{
                     id: searchText
                     font{
@@ -72,7 +79,7 @@ Item {
                         pixelSize: 25
                     }
                     text: "\uf002"
-                    color: "#2C3E50"
+                    color: "white"
                     anchors.centerIn: parent
                 }
 
@@ -80,12 +87,12 @@ Item {
                     anchors.fill: parent
                     onClicked: {
                         mainStack.replace("SearchUsers.qml")
-                        home.color = "white"
-                        homeText.color = "#2C3E50"
-                        search.color = "#2C3E50"
-                        searchText.color = "white"
-                        add.color = "white"
-                        addText.color  = "#2C3E50"
+                        //home.color = "white"
+                        homeText.color = "white"
+                        //search.color = "#2C3E50"
+                        searchText.color = "#ED7014"
+                        //add.color = "white"
+                        addText.color  = "white"
                     }
                 }
             }
@@ -95,7 +102,7 @@ Item {
                 anchors.left: search.right
                 height: parent.height
                 width: parent.width/3
-
+                color: "#1C4A5A"
                 Text{
                     id: addText
                     font{
@@ -103,7 +110,7 @@ Item {
                         pixelSize: 25
                     }
                     text: "\uf044"
-                    color: "#2C3E50"
+                    color: "white"
                     anchors.centerIn: parent
                 }
 
@@ -111,12 +118,12 @@ Item {
                     anchors.fill: parent
                     onClicked: {
                         mainStack.replace("CreateAssignment.qml")
-                        home.color = "white"
-                        homeText.color = "#2C3E50"
-                        search.color = "white"
-                        searchText.color = "#2C3E50"
-                        add.color = "#2C3E50"
-                        addText.color  = "white"
+                        //home.color = "white"
+                        homeText.color = "white"
+                        //search.color = "white"
+                        searchText.color = "white"
+                        //add.color = "#2C3E50"
+                        addText.color  = "#ED7014"
 
                     }
                 }

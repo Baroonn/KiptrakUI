@@ -12,12 +12,18 @@ Item {
 
     Rectangle{
         anchors.fill: parent
-        color: "white"
+        color: "#1C4A5A"
 
         FontLoader{
             id: webFont
             source: "qrc:/solidFonts.otf"
         }
+
+        FontLoader{
+            id: netWebFont
+            source: "qrc:/Lato.ttf"
+        }
+
         Connections{
             target: masterController.ui_webRequest
             onRequestComplete: function(status_code, response){
@@ -56,8 +62,10 @@ Item {
 
                     }
 
-                    pendingLabel.text = "Pending \n"+pendingCount
-                    completedLabel.text = "Completed \n"+completedCount
+                    //pendingLabel.text = "Pending \n"+pendingCount
+                    pendingText.text = pendingCount
+                    //completedLabel.text = "Completed \n"+completedCount
+                    completedText.text = completedCount
                     busyIndicator.visible = false
                 }
                 else if(status_code === 401)
@@ -113,8 +121,8 @@ Item {
                         }
 
                     }
-                    pendingLabel.text = "Pending \n"+pendingCount
-                    completedLabel.text = "Completed \n"+completedCount
+                    pendingText.text = pendingCount
+                    completedText.text = completedCount
                     busyIndicator.visible = false
                     error.text = "Error getting your assignments"
                 }
@@ -131,20 +139,25 @@ Item {
             anchors.topMargin: 10
             anchors.left: parent.left
             anchors.leftMargin: 10
+            color: "white"
             font.pixelSize: 30
+            font.family: netWebFont.name
             text: "Hi, " + LocalStorage.dbGetUserDetails().split("&")[0]
+            font.bold: true
         }
 
         Label{
-            id: date
-            text: new Date().toLocaleString(Qt.locale(),"dd MMM, yyyy")
+            id: dated
+            text: new Date().toLocaleString(Qt.locale(),"dddd, dd MMMM")
             anchors.top: parent.top
-            anchors.topMargin: 20
-            anchors.right: parent.right
-            anchors.rightMargin: 10
+            anchors.topMargin: 50
+            anchors.left: parent.left
+            anchors.leftMargin: 10
             font.pixelSize: 15
             anchors.verticalCenter: parent.verticalCenter
             font.italic: true
+            height: 15
+            color: "white"
         }
 
         Flickable{
@@ -154,13 +167,13 @@ Item {
             contentWidth: (parent.width *2) + 20
             contentHeight: 100
             anchors.top: greeting.bottom
-            anchors.topMargin: 10
+            anchors.topMargin: 27
             anchors.left: parent.left
             anchors.leftMargin: 10
             boundsMovement: Flickable.StopAtBounds
             z:99
             Rectangle{
-                color: "white"
+                color: "#1C4A5A"
                 anchors.fill: parent
                 RowLayout{
 
@@ -176,17 +189,21 @@ Item {
                             Layout.alignment: Qt.AlignLeft
                             height: 100
                             width: parent.width/2 - 25
-                            color: "grey"
+                            color: "#ED7014"
                             radius: 6
                             z:2
                             Label{
                                 id: pendingLabel
-                                text: "Pending \n-"
+                                text: "Pending \n" + pendingText.text
                                 font.pixelSize: 25
                                 color: "white"
                                 anchors.left: parent.left
                                 anchors.leftMargin: 10
                                 anchors.verticalCenter: parent.verticalCenter
+                            }
+                            Text{
+                                id: pendingText
+                                visible: false
                             }
                         }
 
@@ -196,51 +213,58 @@ Item {
                             Layout.alignment: Qt.AlignLeft
                             height: 100
                             width: parent.width/2 -25
-                            color: "grey"
+                            color: "#FA8128"
                             radius: 6
                             z:2
                             Label{
                                 id: completedLabel
-                                text: "Completed \n-"
+                                text: "Completed \n" + completedText.text
                                 font.pixelSize: 25
                                 color: "white"
                                 anchors.left: parent.left
                                 anchors.leftMargin: 10
                                 anchors.verticalCenter: parent.verticalCenter
                             }
+                            Text{
+                                id: completedText
+                                visible: false
+                            }
                         }
                 }
-
             }
-
-
         }
 
-
-
         ListView{
+            Rectangle{
+                anchors.fill: parent
+                color: "#1C4A5A"
+                z:-99
+                anchors.top: parent.top
+                anchors.topMargin: 80
+            }
+
             id: listView
             anchors.top: stats.bottom
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.bottom: errorRect.top
+
             model: model
             header:Rectangle{
                 id: headerListView
                 z:99
                 height: 80
                 width: parent.width
-                color: "white"
+                color: "#1C4A5A"
                 Label{
                     id: headerLabel
                     anchors.left: parent.left
                     anchors.leftMargin: 10
-
                     anchors.verticalCenter: parent.verticalCenter
                     text: "Your Assignments"
-                    color: "#2C3E50"
+                    color: "white"
                     font.pixelSize: 25
-
+                    font.family: netWebFont.name
                     z:2
                 }
 
@@ -258,7 +282,8 @@ Item {
                     anchors.leftMargin: 10
                     anchors.topMargin: 5
                     anchors.bottomMargin: 5
-                    color: "#2C3E50"
+                    //color: "#D6DCDC"
+                    color: "white"
                     radius: 6
                     Label{
                         id: title
@@ -267,10 +292,11 @@ Item {
                         anchors.leftMargin: 10
                         anchors.right: parent.right
                         font.pixelSize: 20
-                        color: "white"
+                        //color: "white"
                         height: 35
                         clip: true
                         opacity: 1
+                        font.family: netWebFont.name
                     }
 
                     Label{
@@ -317,7 +343,7 @@ Item {
 
                     Label{
                         id: dueDate
-                        text: dueDateText
+                        text: "Due: \n" + dueDateText
                         anchors.right: parent.right
                         anchors.rightMargin: 10
                         anchors.bottom: parent.bottom
@@ -381,7 +407,7 @@ Item {
                         pixelSize: 25
                     }
                     text: status.text === "Completed"? "\uf058" : "\uf111"
-                    color: "white"
+                    color: "#1C4A5A"
                     MouseArea{
                         anchors.fill: parent
                         onClicked:{
@@ -389,10 +415,18 @@ Item {
                             if(customCheckBox.text === "\uf058"){
                                 LocalStorage.dbUpdateAssignmentStatus("New", assignId.text)
                                 customCheckBox.text = "\uf111"
+                                var a = parseInt(pendingText.text)
+                                pendingText.text = ++a
+                                var b = parseInt(completedText.text)
+                                completedText.text = --b
                             }
                             else{
                                 LocalStorage.dbUpdateAssignmentStatus("Completed", assignId.text)
                                 customCheckBox.text = "\uf058"
+                                a = parseInt(pendingText.text)
+                                pendingText.text = --a
+                                b = parseInt(completedText.text)
+                                completedText.text = ++b
                             }
                         }
                     }
@@ -420,7 +454,7 @@ Item {
                                                    })
                     getAssignment.listModel.append({
                                                        myLabel:"Date Due: " ,
-                                                       myText:dueDate.text
+                                                       myText:dueDate.text.split('\n')[1]
                                                    })
                     getAssignment.listModel.append({
                                                        myLabel:"Notes: " ,
@@ -445,11 +479,12 @@ Item {
             id:errorRect
             width: parent.width
             anchors.bottom: parent.bottom
+            color: "#1C4A5A"
             height: 30
             Label{
                 id: error
                 text: ""
-                color: "red"
+                color: "yellow"
                 anchors.centerIn: parent
                 z:199
             }
@@ -476,7 +511,7 @@ Item {
             edge: Qt.BottomEdge
             interactive: false
             background: Rectangle{
-                color: "#2C3E50"
+                color: "#1C4A5A"
                 anchors.fill: parent
             }
             GetAssignmentPage{
