@@ -9,18 +9,19 @@ Item {
     Rectangle{
         opacity: 1
         anchors.fill: parent
-        color: "#1C4A5A"
+        color: "#F5F5F4"
 
         Rectangle {
             id: searchRectangle
             height: 35
             color: "#fffdfd"
+            border.color: "black"
             radius: 6
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.top: parent.top
-            anchors.rightMargin: 20
-            anchors.leftMargin: 20
+            anchors.rightMargin: 10
+            anchors.leftMargin: 10
             anchors.topMargin: 20
             z:1
 
@@ -118,7 +119,7 @@ Item {
             anchors.top:  searchRectangle.bottom
             anchors.horizontalCenter: parent.horizontalCenter
             height: 30
-            color: "yellow"
+            color: "#1C4A5A"
         }
 
         ListModel{

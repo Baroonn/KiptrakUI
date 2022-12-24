@@ -12,7 +12,7 @@ Item {
             source: "qrc:/solidFonts.otf"
         }
         anchors.fill: parent
-        color: "#1C4A5A"
+        color: "#F5F5F4"
         StackView{
             id: mainStack
             initialItem: "GetAssignments.qml"
@@ -30,7 +30,7 @@ Item {
             height: 50
             Rectangle{
                 anchors.fill: parent
-                color: "#1C4A5A"
+                color: "#F5F5F4"
                 z:-99
             }
 
@@ -39,7 +39,7 @@ Item {
                 height: navBar.height
                 width: navBar.width/3
                 anchors.left: navBar.left
-                color: "#1C4A5A"
+                color: "#F5F5F4"
                 Text{
                     id: homeText
                     font{
@@ -54,13 +54,14 @@ Item {
                 MouseArea{
                     anchors.fill: parent
                     onClicked: {
-                        mainStack.replace("GetAssignments.qml")
-
                         homeText.color = "#ED7014"
 
-                        searchText.color = "white"
+                        searchText.color = "black"
 
-                        addText.color  = "white"
+                        addText.color  = "black"
+                        if(mainStack.currentItem.toString().split('_')[0]!=="GetAssignments"){
+                            mainStack.push("GetAssignments.qml")
+                        }
                     }
                 }
 
@@ -71,7 +72,7 @@ Item {
                 anchors.left: home.right
                 height: parent.height
                 width: parent.width/3
-                color: "#1C4A5A"
+                color: "#F5F5F4"
                 Text{
                     id: searchText
                     font{
@@ -79,20 +80,22 @@ Item {
                         pixelSize: 25
                     }
                     text: "\uf002"
-                    color: "white"
+                    color: "black"
                     anchors.centerIn: parent
                 }
 
                 MouseArea{
                     anchors.fill: parent
                     onClicked: {
-                        mainStack.replace("SearchUsers.qml")
                         //home.color = "white"
-                        homeText.color = "white"
+                        homeText.color = "black"
                         //search.color = "#2C3E50"
                         searchText.color = "#ED7014"
                         //add.color = "white"
-                        addText.color  = "white"
+                        addText.color  = "black"
+                        if(mainStack.currentItem.toString().split('_')[0]!=="SearchUsers"){
+                            mainStack.push("SearchUsers.qml")
+                        }
                     }
                 }
             }
@@ -102,7 +105,7 @@ Item {
                 anchors.left: search.right
                 height: parent.height
                 width: parent.width/3
-                color: "#1C4A5A"
+                color: "#F5F5F4"
                 Text{
                     id: addText
                     font{
@@ -110,21 +113,22 @@ Item {
                         pixelSize: 25
                     }
                     text: "\uf044"
-                    color: "white"
+                    color: "black"
                     anchors.centerIn: parent
                 }
 
                 MouseArea{
                     anchors.fill: parent
                     onClicked: {
-                        mainStack.replace("CreateAssignment.qml")
                         //home.color = "white"
-                        homeText.color = "white"
+                        homeText.color = "black"
                         //search.color = "white"
-                        searchText.color = "white"
+                        searchText.color = "black"
                         //add.color = "#2C3E50"
                         addText.color  = "#ED7014"
-
+                        if(mainStack.currentItem.toString().split('_')[0]!=="CreateAssignment"){
+                            mainStack.push("CreateAssignment.qml")
+                        }
                     }
                 }
             }

@@ -14,7 +14,7 @@ Item {
         spacing: 10
         Text {
             id: title
-            color: "#fff8f8"
+            color: "black"
             text: stringDecorator.ui_label
             font.pixelSize: 18
         }
@@ -23,6 +23,7 @@ Item {
             id: background
             color: "#fffdfd"
             radius: 6
+            border.color: "black"
             width: parent.width
             TextInput {
                 id: textValue

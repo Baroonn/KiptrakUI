@@ -124,7 +124,7 @@ Item {
                     pendingText.text = pendingCount
                     completedText.text = completedCount
                     busyIndicator.visible = false
-                    error.text = "Error getting your assignments"
+                    error.text = "Error syncing your assignments"
                 }
             }
         }
@@ -237,7 +237,7 @@ Item {
         ListView{
             Rectangle{
                 anchors.fill: parent
-                color: "#1C4A5A"
+                color: "#F5F5F4"
                 z:-99
                 anchors.top: parent.top
                 anchors.topMargin: 80
@@ -340,15 +340,41 @@ Item {
                         height: 25
                         opacity: 1
                     }
-
-                    Label{
-                        id: dueDate
-                        text: "Due: \n" + dueDateText
+                    Rectangle{
+                        id: daysLeftRectangle
                         anchors.right: parent.right
                         anchors.rightMargin: 10
                         anchors.bottom: parent.bottom
-                        color: "#aaa"
-                        opacity: 1
+                        anchors.bottomMargin: 10
+                        width: 100
+                        height: 25
+                        color: "#FAF9F6"
+                        radius: 5
+                        Label{
+                            id: dueDate
+                            text: {
+                                const currentDate = new Date();
+                                const d = dueDateText.split('-');
+                                const dueDated = new Date(`${d[1]}/${d[2]}/${d[0]}`);
+                                const daysLeft = Math.floor((dueDated.getTime() - currentDate.getTime())/(1000*60*60*24));
+                                if(daysLeft<1){
+                                    dueDate.color = "#FC6A03"
+                                }
+
+                                return `${Math.floor((dueDated.getTime() - currentDate.getTime())/(1000*60*60*24))} days left`;
+                            }
+                                //"Due: \n" + dueDateText
+                            anchors.centerIn: parent
+                            color: "#90EE90"
+                            opacity: 1
+                        }
+                    }
+
+
+                    Label{
+                        id:due
+                        text: dueDateText
+                        visible: false
                     }
 
                     Label{
@@ -454,7 +480,7 @@ Item {
                                                    })
                     getAssignment.listModel.append({
                                                        myLabel:"Date Due: " ,
-                                                       myText:dueDate.text.split('\n')[1]
+                                                       myText:due.text
                                                    })
                     getAssignment.listModel.append({
                                                        myLabel:"Notes: " ,
@@ -479,12 +505,12 @@ Item {
             id:errorRect
             width: parent.width
             anchors.bottom: parent.bottom
-            color: "#1C4A5A"
+            color: "#F5F5F4"
             height: 30
             Label{
                 id: error
                 text: ""
-                color: "yellow"
+                color: "red"
                 anchors.centerIn: parent
                 z:199
             }

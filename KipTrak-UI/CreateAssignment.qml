@@ -76,7 +76,7 @@ Item {
         Rectangle{
             id: mainFrame
             anchors.fill: parent
-            color: "#1C4A5A"
+            color: "#F5F5F4"
                 Text{
                     id: createAssignmentHeading
                     text: "Create \nAssignment"
@@ -85,7 +85,7 @@ Item {
                     anchors.topMargin: 50
                     anchors.left: parent.left
                     anchors.leftMargin: 20
-                    color: "white"
+                    color: "#1C4A5A"
                     width: parent.width
                     wrapMode: Text.Wrap
                 }
@@ -152,9 +152,10 @@ Item {
                 Rectangle {
                     id: imageRectangle
                     height: 20
-
+                    border.color: "black"
                     color: "#fffdfd"
                     radius: 6
+                    width: parent.width
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.top: imageText.bottom
@@ -200,8 +201,12 @@ Item {
                     id: createAssignmentButton
                     width: 195
                     height: 45
-                    color: "#ffffff"
-                    radius: 20
+                    color: "#1C4A5A"
+                    radius: 5
+                    anchors.right: parent.right
+                    anchors.left: parent.left
+                    anchors.leftMargin: 10
+                    anchors.rightMargin: 10
                     anchors.top: menu.bottom
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.topMargin: 100
@@ -218,6 +223,7 @@ Item {
                             text: qsTr("Create Assignment")
                             font.pixelSize: 19
                             fontSizeMode: Text.FixedSize
+                            color: "white"
                         }
 
                         onClicked: {
