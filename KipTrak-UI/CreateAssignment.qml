@@ -140,7 +140,7 @@ Item {
 
                 Text {
                     id: imageText
-                    color: "#fff8f8"
+                    color: "black"
                     text: qsTr("Upload Pdf: ")
                     anchors.left: parent.left
                     anchors.top: notesInput.bottom

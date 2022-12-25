@@ -172,11 +172,12 @@ Item {
             anchors.leftMargin: 10
             boundsMovement: Flickable.StopAtBounds
             z:99
-            Rectangle{
+            PaddedRectangle{
                 color: "#1C4A5A"
                 anchors.fill: parent
+                height: 100
+                z:99
                 RowLayout{
-
                     anchors.rightMargin: 10
                     anchors.margins: 10
                     spacing: 15
@@ -191,6 +192,7 @@ Item {
                             width: parent.width/2 - 25
                             color: "#ED7014"
                             radius: 6
+
                             z:2
                             Label{
                                 id: pendingLabel
@@ -233,6 +235,16 @@ Item {
                 }
             }
         }
+        Rectangle{
+            id: middle
+            width: parent.width
+            height: 45
+            color: "#1C4A5A"
+            anchors.top: stats.bottom
+            anchors.topMargin: -5
+            z: 50
+            radius: 50
+        }
 
         ListView{
             Rectangle{
@@ -244,7 +256,8 @@ Item {
             }
 
             id: listView
-            anchors.top: stats.bottom
+            anchors.top: middle.bottom
+            anchors.topMargin: -20
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.bottom: errorRect.top
@@ -255,14 +268,14 @@ Item {
                 z:99
                 height: 80
                 width: parent.width
-                color: "#1C4A5A"
+                color: "#F5F5F4"
                 Label{
                     id: headerLabel
                     anchors.left: parent.left
                     anchors.leftMargin: 10
                     anchors.verticalCenter: parent.verticalCenter
                     text: "Your Assignments"
-                    color: "white"
+                    color: "#1C4A5A"
                     font.pixelSize: 25
                     font.family: netWebFont.name
                     z:2
@@ -547,60 +560,109 @@ Item {
             }
             Label{
                 id: deleteError
-                anchors.bottom: closeButton.top
+                anchors.bottom: drawerFooter.top
                 anchors.bottomMargin: 10
                 anchors.horizontalCenter: parent.horizontalCenter
                 wrapMode: Text.Wrap
                 color: "yellow"
             }
-
-            Button{
-                id: closeButton
-                text: "Close"
+            Rectangle{
+                id: drawerFooter
+                width: parent.width
                 anchors.bottom: parent.bottom
-                anchors.bottomMargin: 10
-                anchors.right: downloadButton.left
-                anchors.rightMargin: 10
-                onClicked:{
-                    drawer.close()
-                }
-            }
+                height: 65
+                color: "#1C4A5A"
+                Rectangle{
+                    id: closeButton
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 10
+                    anchors.right: downloadButton.left
+                    anchors.rightMargin: 10
+                    height: 40
+                    color: "orange"
+                    radius: 5
+                    width: parent.width/3.4
+                    Text{
+                        text: "CLOSE"
+                        font.family: "Helvetica"
+                        color: "white"
+                        anchors.centerIn: parent
+                    }
 
-            Button{
-                id: downloadButton
-                text: "View File"
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 10
-                anchors.right: deleteButton.left
-                anchors.rightMargin: 10
-                onClicked: {
-                    //downloader.doDownload(getAssignment.contentId)
-                    Qt.openUrlExternally("https://kiptrak.blob.core.windows.net/images/" + getAssignment.contentId + ".pdf")
-                }
-            }
-
-            Button{
-                id: deleteButton
-                text: "Delete"
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 10
-                anchors.right: parent.right
-                anchors.rightMargin: 10
-                onClicked: {
-                    const deleteAssignsCallback = function(response, status){
-                        if(status===204){
-                            Service.getAssignments()
-                        }
-                        else{
-                            deleteError.text = "You cannot delete this assignment."
+                    MouseArea{
+                        anchors.fill: parent
+                        onClicked:{
+                            drawer.close()
                         }
                     }
 
-                    var endpoint = getAssignment.contentId
-                    Service.deleteAssignment(`assignments/${endpoint}`, deleteAssignsCallback)
-                    //Service.getAssignments()
+                }
+
+                Rectangle{
+                    id: downloadButton
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 10
+                    anchors.right: deleteButton.left
+                    anchors.rightMargin: 10
+                    height: 40
+                    color: "blue"
+                    radius: 5
+                    width: parent.width/3.4
+                    Text{
+                        text: "VIEW FILE"
+                        font.family: "Helvetica"
+                        color: "white"
+                        anchors.centerIn: parent
+                    }
+
+                    MouseArea{
+                        anchors.fill: parent
+                        onClicked: {
+                            //downloader.doDownload(getAssignment.contentId)
+                            Qt.openUrlExternally("https://kiptrak.blob.core.windows.net/images/" + getAssignment.contentId + ".pdf")
+                        }
+                    }
+
+                }
+
+                Rectangle{
+                    id: deleteButton
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 10
+                    anchors.right: parent.right
+                    anchors.rightMargin: 10
+                    height: 40
+                    color: "red"
+                    radius: 5
+                    width: parent.width/3.4
+                    Text{
+                        color: "white"
+                        font.family: "Helvetica"
+                        text: "DELETE"
+                        anchors.centerIn: parent
+                    }
+
+                    MouseArea{
+                        anchors.fill: parent
+                        onClicked: {
+                            const deleteAssignsCallback = function(response, status){
+                                if(status===204){
+                                    Service.getAssignments()
+                                }
+                                else{
+                                    deleteError.text = "You cannot delete this assignment."
+                                }
+                            }
+
+                            var endpoint = getAssignment.contentId
+                            Service.deleteAssignment(`assignments/${endpoint}`, deleteAssignsCallback)
+                            //Service.getAssignments()
+                        }
+                    }
+
                 }
             }
+
         }
 
     }
