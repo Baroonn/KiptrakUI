@@ -12,7 +12,7 @@ Item {
 
     Rectangle{
         anchors.fill: parent
-        color: "#1C4A5A"
+        color: "#F5F5F4"
 
         FontLoader{
             id: webFont
@@ -132,32 +132,37 @@ Item {
         ListModel{
             id: model
         }
+        Rectangle{
+            id: dashboard
+            width: parent.width
+            color: "#1C4A5A"
+            height: 80
+            Label{
+                id: greeting
+                anchors.top: parent.top
+                anchors.topMargin: 10
+                anchors.left: parent.left
+                anchors.leftMargin: 10
+                color: "white"
+                font.pixelSize: 30
+                font.family: netWebFont.name
+                text: "Hi, " + LocalStorage.dbGetUserDetails().split("&")[0]
+                font.bold: true
+            }
 
-        Label{
-            id: greeting
-            anchors.top: parent.top
-            anchors.topMargin: 10
-            anchors.left: parent.left
-            anchors.leftMargin: 10
-            color: "white"
-            font.pixelSize: 30
-            font.family: netWebFont.name
-            text: "Hi, " + LocalStorage.dbGetUserDetails().split("&")[0]
-            font.bold: true
-        }
-
-        Label{
-            id: dated
-            text: new Date().toLocaleString(Qt.locale(),"dddd, dd MMMM")
-            anchors.top: parent.top
-            anchors.topMargin: 50
-            anchors.left: parent.left
-            anchors.leftMargin: 10
-            font.pixelSize: 15
-            anchors.verticalCenter: parent.verticalCenter
-            font.italic: true
-            height: 15
-            color: "white"
+            Label{
+                id: dated
+                text: new Date().toLocaleString(Qt.locale(),"dddd, dd MMMM")
+                anchors.top: parent.top
+                anchors.topMargin: 50
+                anchors.left: parent.left
+                anchors.leftMargin: 10
+                font.pixelSize: 15
+                anchors.verticalCenter: parent.verticalCenter
+                font.italic: true
+                height: 15
+                color: "white"
+            }
         }
 
         Flickable{
@@ -166,19 +171,20 @@ Item {
             height: 100
             contentWidth: (parent.width *2) + 20
             contentHeight: 100
-            anchors.top: greeting.bottom
-            anchors.topMargin: 27
+            anchors.top: dashboard.bottom
+            //anchors.topMargin: 27
             anchors.left: parent.left
-            anchors.leftMargin: 10
+            //anchors.leftMargin: 10
             boundsMovement: Flickable.StopAtBounds
             z:99
-            PaddedRectangle{
+            Rectangle{
                 color: "#1C4A5A"
                 anchors.fill: parent
                 height: 100
                 z:99
                 RowLayout{
                     anchors.rightMargin: 10
+                    anchors.leftMargin: 10
                     anchors.margins: 10
                     spacing: 15
                     width: parent.width
@@ -192,7 +198,8 @@ Item {
                             width: parent.width/2 - 25
                             color: "#ED7014"
                             radius: 6
-
+                            anchors.left: parent.left
+                            anchors.leftMargin: 10
                             z:2
                             Label{
                                 id: pendingLabel
@@ -241,7 +248,7 @@ Item {
             height: 45
             color: "#1C4A5A"
             anchors.top: stats.bottom
-            anchors.topMargin: -5
+            anchors.topMargin: -25
             z: 50
             radius: 50
         }
@@ -268,7 +275,12 @@ Item {
                 z:99
                 height: 80
                 width: parent.width
-                color: "#F5F5F4"
+                //color: "#F5F5F4"
+                gradient: Gradient{
+                    GradientStop{position: 0.8; color: "#F5F5F4"}
+                    GradientStop{position: 1.0; color:"#00F5F5F4"}
+                }
+
                 Label{
                     id: headerLabel
                     anchors.left: parent.left
@@ -288,7 +300,6 @@ Item {
             delegate: MouseArea{
                 width: parent.width
                 height: 100
-
                 Rectangle{
                     anchors.fill: parent
                     anchors.rightMargin: 10
@@ -369,12 +380,15 @@ Item {
                                 const currentDate = new Date();
                                 const d = dueDateText.split('-');
                                 const dueDated = new Date(`${d[1]}/${d[2]}/${d[0]}`);
-                                const daysLeft = Math.floor((dueDated.getTime() - currentDate.getTime())/(1000*60*60*24));
+                                var daysLeft = Math.floor((dueDated.getTime() - currentDate.getTime())/(1000*60*60*24));
                                 if(daysLeft<1){
                                     dueDate.color = "#FC6A03"
                                 }
+                                if(daysLeft<0){
+                                    daysLeft=0;
+                                }
 
-                                return `${Math.floor((dueDated.getTime() - currentDate.getTime())/(1000*60*60*24))} days left`;
+                                return `${daysLeft} ${daysLeft==1?"day":"days"} left`;
                             }
                                 //"Due: \n" + dueDateText
                             anchors.centerIn: parent
@@ -550,7 +564,7 @@ Item {
             edge: Qt.BottomEdge
             interactive: false
             background: Rectangle{
-                color: "#1C4A5A"
+                color: "#F5F5F4"//#F5F5F4
                 anchors.fill: parent
             }
             GetAssignmentPage{
@@ -571,7 +585,7 @@ Item {
                 width: parent.width
                 anchors.bottom: parent.bottom
                 height: 65
-                color: "#1C4A5A"
+                color: "#F5F5F4"
                 Rectangle{
                     id: closeButton
                     anchors.bottom: parent.bottom

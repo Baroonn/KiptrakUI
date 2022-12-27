@@ -12,7 +12,7 @@ Item {
         id: back
         anchors.fill: parent
         anchors.margins: 10
-        color: "#1C4A5A"
+        color: "#F5F5F4"
 
         Label{
             id: assignId
@@ -32,16 +32,17 @@ Item {
                     id: top
                     text: myLabel
                     font.pixelSize: 20
-                    color: "yellow"
+                    font.bold: true
+                    color: "#1C4A5A"
                 }
                 Text{
                     id:bottom
                     text: myText
                     width: parent.width
                     wrapMode: Text.Wrap
-                    color: "white"
+                    color: "black"
                     bottomPadding: 10
-                    font.pixelSize: 18
+                    font.pixelSize: 16
                     Layout.maximumWidth: parent.width
                     horizontalAlignment: Text.AlignJustify
                 }
